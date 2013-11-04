@@ -1,0 +1,337 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=big5">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.0.1  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="H.C. Chen">
+	<META NAME="CHANGED" CONTENT="20131104;16110224">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 2cm }
+		PRE { font-family: "Microsoft YaHei" }
+		P { margin-bottom: 0.21cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="zh-TW" DIR="LTR">
+<P STYLE="margin-left: 0.2cm; margin-top: 0.42cm; margin-bottom: 0.5cm; page-break-after: avoid"><A NAME="__DdeLink__3_1998736844"></A>
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4><SPAN LANG="en-US"><FONT SIZE=5>j
+e f o r t h . 3 n w</FONT></SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 0.2cm; margin-top: 0.42cm; margin-bottom: 0.5cm; page-break-after: avoid">
+<FONT FACE="Albany, sans-serif"><FONT SIZE=4><SPAN LANG="en-US"><FONT SIZE=4>jeforth</FONT></SPAN></FONT></FONT></P>
+<P STYLE="margin-left: 0.2cm; margin-bottom: 0cm; page-break-before: auto">
+<FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">2011/12/23 
+<A HREF="http://www.jeforth.com/" NAME="http://www.jeforth.com">jeforth
+initial version</A> announced by FigTaiwan </SPAN></FONT>爽哥 <FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">&amp;
+Yap. </SPAN></FONT>本來是用 <FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">WWW
+browser </SPAN></FONT>執行的，以操作 <FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">HTML5
+</SPAN></FONT>為範例，用來推廣 <FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">forth</SPAN></FONT>，非常簡潔優美。我把它
+<FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">port </SPAN></FONT>到
+<FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">node-webkit
+</SPAN></FONT>下執行，以便享有現代新程式的好處。 <FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">Forth
+</SPAN></FONT>是個管理大量命令的工具，也是與電腦溝通的語法中最簡單的。我們要電腦做的事，本來只有兩句話，用其他語言表達經常會變成一整頁。而
+<FONT FACE="Times New Roman, serif"><SPAN LANG="en-US">forth
+</SPAN></FONT>的語法最自由，<SPAN LANG="zh-TW">我們可以把它安排成</SPAN>就是兩句話。</P>
+<PRE STYLE="margin-left: 0.2cm">
+<FONT SIZE=4><SPAN LANG="en-US">Jeforth.3nw</SPAN></FONT>
+        <SPAN LANG="en-US">We have only two words in jeforth.js kernel at the beginning, they are 'code', 'end-code'</SPAN>
+    <SPAN LANG="en-US">and if plus the NULL word at words['forth'][0] then there are 3 words total. To avoid</SPAN>
+        <SPAN LANG="en-US">using the same name with other jeforth implementions, I name it jeforth.3nw.</SPAN>
+
+        <SPAN LANG="en-US">=== Resources ===</SPAN>
+
+        <SPAN LANG="en-US">o  jeforth for node-webkit source code https://github.com/hcchengithub/jeforth.3nw</SPAN>
+
+        <SPAN LANG="en-US">o  The precedent jeforth for WSH source code http://fossilrepos.sourceforge.net/srv.fsl/0/jeforth</SPAN>
+
+        <SPAN LANG="en-US">o  jeforth </SPAN>元身為 <SPAN LANG="en-US">http://tutor.ksana.tw/ksanavm </SPAN>用 <SPAN LANG="en-US">C </SPAN>語言實現 <SPAN LANG="en-US">forth </SPAN>的方法之精彩教材「剎那極簡虛擬機」 <SPAN LANG="en-US">by Yap/FigTaiwan. </SPAN>小葉老師的教程 <SPAN LANG="en-US">www.ksana.tw</SPAN>
+
+        <SPAN LANG="en-US">o  Yap </SPAN>講解 <SPAN LANG="en-US">jeforth </SPAN>精彩課程 <SPAN LANG="en-US">http://www.jeforth.com/demo.html </SPAN>感謝 王建鋒 的網站
+
+        <SPAN LANG="en-US">o  </SPAN>超精彩的 <SPAN LANG="en-US">waterbear </SPAN>圖形積木介面 <SPAN LANG="en-US">jeforth http://jforthblocks.appspot.com/static/code/index_tw.html by Jimmy</SPAN>的爸<SPAN LANG="en-US">.</SPAN>
+
+        <SPAN LANG="en-US">o  </SPAN>臺灣符式推廣協會 <SPAN LANG="en-US">FigTaiwan </SPAN>
+       <SPAN LANG="en-US">https://groups.google.com/forum/#!forum/figtaiwan</SPAN>
+       <SPAN LANG="en-US">http://www.figtaiwan.org</SPAN>
+
+
+
+<SPAN LANG="en-US">hcchen5600 2013/08/31 09:56:22  r1</SPAN>
+
+        <SPAN LANG="en-US">I tried to add a jQuery-Terminal console for Yap/FigTaiwan's jeforth v1 </SPAN>
+        <SPAN LANG="en-US">on HTA environment. But turned out to find HTA is a sinking boat so I </SPAN>
+        <SPAN LANG="en-US">am moving the bits to node-webkit. ----------- done!</SPAN>
+        
+        <SPAN LANG="en-US">[x] how to gets() or readline() ?</SPAN>
+        <SPAN LANG="en-US">==&gt; No way. I think that I need to put up with the event driven style.</SPAN>
+
+
+<SPAN LANG="en-US">hcchen5600 2013/08/31 11:34:59  r2</SPAN>
+
+        <SPAN LANG="en-US">I don't know how to deal with the event driven gets(). Let's do and</SPAN>
+        <SPAN LANG="en-US">see. Start to port my two words kernal. The two words are code and end-code.</SPAN>
+        <SPAN LANG="en-US">hcchen5600 2013/10/01 16:53:43 </SPAN>
+        <SPAN LANG="en-US">I can handle the event-driven keyboard input now! I split the gets() job </SPAN>
+        <SPAN LANG="en-US">into two phases. Whether the rear phase can continue to finish the job is</SPAN>
+        <SPAN LANG="en-US">the key to success. My recent case is the docode() function, its rear phase</SPAN>
+        <SPAN LANG="en-US">is to execute the 'end-code' and that's do-able. Another important thing is</SPAN>
+        <SPAN LANG="en-US">that the call-back function is not as terrible as I thought. Call-back function</SPAN>
+        <SPAN LANG="en-US">can be defined *within* a mother function and the beautiful thing is that the</SPAN>
+        <SPAN LANG="en-US">mother function's variable is not volatile. Callback function can access</SPAN>
+        <SPAN LANG="en-US">them even after the mother function has ended!</SPAN>
+
+
+<SPAN LANG="en-US">hcchen5600 2013/10/03 00:40:10 r3</SPAN>
+
+        <SPAN LANG="en-US">jeforth03 is now very well. But term.echo() always prints a \n that's not what</SPAN>
+        <SPAN LANG="en-US">dot . command is expeting. I am asking the question at </SPAN>
+        <SPAN LANG="en-US">https://github.com/jcubic/jquery.terminal/issues/124</SPAN>
+        <SPAN LANG="en-US">and I found a place to demo qestions : http://jsfiddle.net/eephillip/dEczJ/</SPAN>
+
+
+<SPAN LANG="en-US">hcchen5600 2013/10/03 11:26:43 r4</SPAN>
+
+        <SPAN LANG="en-US">(1) </SPAN>
+        <SPAN LANG="en-US">The problem of echo() can be resolved by replacing echo by something like this,</SPAN>
+        <SPAN LANG="en-US">window.echobuffer =&quot;&quot;;</SPAN>
+        <SPAN LANG="en-US">function myecho(){</SPAN>
+                <SPAN LANG="en-US">if (echobuffer){</SPAN>
+                        <SPAN LANG="en-US">terminal.echo(echobuffer);</SPAN>
+                        <SPAN LANG="en-US">echobuffer = &quot;&quot;</SPAN>
+                <SPAN LANG="en-US">}</SPAN>
+                <SPAN LANG="en-US">terminal.echo(&quot;OK &quot;);</SPAN>
+        <SPAN LANG="en-US">}</SPAN>
+        <SPAN LANG="en-US">terminal.set_prompt(myecho);</SPAN>
+        
+        <SPAN LANG="en-US">(2)</SPAN>
+        <SPAN LANG="en-US">jsc , accept , *debug* &lt;---- shell also docode()</SPAN>
+        <SPAN LANG="en-US">When in such shells, the jeforth is still running !! &lt;----- Problem, like in breakpoint is expected.</SPAN>
+        <SPAN LANG="en-US">jsc in interpreter or outer loop has been fixed by using the pasueExec flag. Going to work in inner </SPAN>
+        <SPAN LANG="en-US">loop . . . . that will be r5</SPAN>
+
+
+<SPAN LANG="en-US">hcchen5600 2013/10/04 13:54:01 r5</SPAN>
+
+        <SPAN LANG="en-US">done !</SPAN>
+        <SPAN LANG="en-US">evernote:///view/2472143/s22/ab302a71-bb94-44d5-98d6-7b924befc16e/ab302a71-bb94-44d5-98d6-7b924befc16e/</SPAN>
+
+
+<SPAN LANG="en-US">hcchen5600 2013/10/05 10:36:51 r6</SPAN>
+
+        <SPAN LANG="en-US">Design suspendForthVM - resumeForthVM  ..... OK!</SPAN>
+        <SPAN LANG="en-US">Use suspend-resume and jQuery-terminal's term.push()-pop() have successfully </SPAN>
+        <SPAN LANG="en-US">accomplished 'accept', '*debug*', 'jsc', and 'docode'.</SPAN>
+        <SPAN LANG="en-US">But I think if make suspend-resume forth words then a read-line colon word </SPAN>
+        <SPAN LANG="en-US">would be even more interesting . . . that would be r7</SPAN>
+
+
+<SPAN LANG="en-US">hcchen5600 2013/10/06 17:01:51 r7</SPAN>
+
+        <SPAN LANG="en-US">I found a r6's problem when developing r7. See below example,</SPAN>
+
+                <SPAN LANG="en-US">j e f o r t h . n w -- r6</SPAN>
+                <SPAN LANG="en-US">OK : test 1 2 3 accept 4 5 6 ;</SPAN>
+                <SPAN LANG="en-US">OK : test2 11 22 33 test 44 55 66 ;</SPAN>
+                <SPAN LANG="en-US">OK test2</SPAN>
+                <SPAN LANG="en-US">&gt; sdfsdff sfsfsdf</SPAN>
+                <SPAN LANG="en-US">OK .s</SPAN>
+                        <SPAN LANG="en-US">0:         11          bh (number)</SPAN>
+                        <SPAN LANG="en-US">1:         22         16h (number)</SPAN>
+                        <SPAN LANG="en-US">2:         33         21h (number)</SPAN>
+                        <SPAN LANG="en-US">3:          1          1h (number)</SPAN>
+                        <SPAN LANG="en-US">4:          2          2h (number)</SPAN>
+                        <SPAN LANG="en-US">5:          3          3h (number)</SPAN>
+                        <SPAN LANG="en-US">6: sdfsdff sfsfsdf (string)</SPAN>
+                        <SPAN LANG="en-US">7: true (boolean)</SPAN>
+                        <SPAN LANG="en-US">8:          4          4h (number)</SPAN>
+                        <SPAN LANG="en-US">9:          5          5h (number)</SPAN>
+                        <SPAN LANG="en-US">a:          6          6h (number)</SPAN>
+                <SPAN LANG="en-US">OK  &lt;---------- problem! 44 55 66 is missing. Because intter loop</SPAN>
+                                                <SPAN LANG="en-US">terminated by 'endinner' that is raied up by test's 'ret'.</SPAN>
+                                                <SPAN LANG="en-US">When resuming, outer() should let inner() know whether it's resuming.</SPAN>
+                                                <SPAN LANG="en-US">The inner() ignores endinner flag when resuming, because the deep inner </SPAN>
+                                                <SPAN LANG="en-US">loop issue is impossible, . </SPAN>
+
+                <SPAN LANG="en-US">r7 has fixed the problem already.</SPAN>
+        
+        <SPAN LANG="en-US">[x] : test 1 2 3 unknown-word 4 5 6 ; &lt;----- still create a new word !! Error handling is bad.</SPAN>
+        <SPAN LANG="en-US">[x] Can't abort 'accept' by Ctrl-D is not good. ==&gt; Ctrl-D can clear the line.</SPAN>
+        <SPAN LANG="en-US">[/] Use suspend-resume has made 'accept' much smaller and more readable!</SPAN>
+                <SPAN LANG="en-US">Re-write jsc, *debug* &lt;----------- let them be.</SPAN>
+        <SPAN LANG="en-US">[x] include</SPAN>
+        <SPAN LANG="en-US">[ ] selftest of all words, refer to </SPAN>
+        <SPAN LANG="en-US">[ ] vocabulary</SPAN>
+        <SPAN LANG="en-US">[ ] WMI</SPAN>
+        <SPAN LANG="en-US">[ ] excel</SPAN>
+
+<SPAN LANG="en-US">hcchen5600 2013/10/07 10:35:57 r8</SPAN>
+
+        <SPAN LANG="en-US">Self-test study</SPAN>
+        <SPAN LANG="en-US">Now I've got an idea for self-test! Design two words &lt;selftest&gt; and &lt;/selftest&gt;</SPAN>
+        <SPAN LANG="en-US">that collect the string within to the selftest string variable. Then fortheval(selftest) at</SPAN>
+        <SPAN LANG="en-US">the end! So we can use all words in the self-test sections, beautiful!</SPAN>
+
+        <SPAN LANG="en-US">code &lt;selftest&gt; ( &lt;statements&gt; -- ) \ Collect self test statements to selftest string</SPAN>
+                <SPAN LANG="en-US">var s = nexttoken(&quot;&lt;/selftest&gt;&quot;);</SPAN>
+                <SPAN LANG="en-US">if (!s.flag) {</SPAN>
+                        <SPAN LANG="en-US">do { </SPAN>
+                                <SPAN LANG="en-US">s += nextstring(&quot;&lt;/selftest&gt;&quot;).str;</SPAN>
+                        <SPAN LANG="en-US">} while(!s.flag);</SPAN>
+                <SPAN LANG="en-US">}</SPAN>
+                <SPAN LANG="en-US">push(s); </SPAN>
+                <SPAN LANG="en-US">end-code</SPAN>
+        <SPAN LANG="en-US">code &lt;/selftest&gt; ( &quot;selftest&quot; -- ) \ Save the self test statements to the global variable selftest.</SPAN>
+                <SPAN LANG="en-US">selftest = pop()</SPAN>
+                <SPAN LANG="en-US">end-code </SPAN>
+                
+        <SPAN LANG="en-US">[x] Why call-stack is so deep when including jeforth.f ?</SPAN>
+                <SPAN LANG="en-US">Because docode() calls outer() is very strange !!!</SPAN>
+        <SPAN LANG="en-US">[x] panic should print ntib first. How to avoid printing the entire huge tib? </SPAN>
+                <SPAN LANG="en-US">print tib.substr(ntib, 80)</SPAN>
+        <SPAN LANG="en-US">[x] Use debugger; to write a breakpoint(&quot;prompt&quot;,conditon)</SPAN>
+        <SPAN LANG="en-US">[x] echobuffer is not dump! Move into prompt() doesn't fixed the problem.</SPAN>
+                <SPAN LANG="en-US">same problem : 'words' prints nothing now ???!!!! </SPAN>
+                <SPAN LANG="en-US">==&gt; Because the OK prompt was there before running the self-test section!</SPAN>
+                    <SPAN LANG="en-US">why? I guess, because the OK prompt is actually the first one of the </SPAN>
+                        <SPAN LANG="en-US">entire session. It was there at the beginning. The OK prompt we expect to</SPAN>
+                        <SPAN LANG="en-US">print the echobuffer needs an enter from the keyboard.</SPAN>
+                <SPAN LANG="en-US">==&gt; If use '\n' then ok. The auther thinks term.echo() should always have a '\n' at the end.</SPAN>
+                        <SPAN LANG="en-US">and he has no idea about my echobuffer.</SPAN>
+                <SPAN LANG="en-US">==&gt; So how about to print a '\n' after self-test?</SPAN>
+        <SPAN LANG="en-US">*** ==&gt; root cause is, jeforth.f and self-test are all running in jQuery-termianl's</SPAN>
+                        <SPAN LANG="en-US">onInit: section. Of course the prompt is not working yet. So an ending '\n'</SPAN>
+                        <SPAN LANG="en-US">should be printed after includeing jeforth.f to flush the echobuffer.</SPAN>
+                
+        <SPAN LANG="en-US">[x] calling outer(ip) in fortheval() is not so beautiful.</SPAN>
+        <SPAN LANG="en-US">[x] words, help, don't use RegEx </SPAN>
+        <SPAN LANG="en-US">[/] 'text' has bug. &quot;char nop text nop&quot; will still wait for input while it should return</SPAN>
+                <SPAN LANG="en-US">an empty string. &lt;============ limitation</SPAN>
+
+        
+        <SPAN LANG="en-US">self-test infrastructure is Ok, now r9 to go on developing the self-tests.</SPAN>
+        
+<SPAN LANG="en-US">hcchen5600 2013/10/08 15:56:52 r9</SPAN>
+
+        <SPAN LANG="en-US">[x] why 'words' only prints some words? ---&gt; that's &quot;words cr&quot; !! not a problem.</SPAN>
+
+        <SPAN LANG="en-US">[x] docode's definition uses jQuery-terminal is not good. It causes a problem too, </SPAN>
+                <SPAN LANG="en-US">*** execute :  &quot;drop&quot; should drop the TOS ... pass </SPAN>
+                <SPAN LANG="en-US">[PROMPT]: Cannot call method 'echo' of undefined</SPAN>
+                <SPAN LANG="en-US">TypeError: Cannot call method 'echo' of undefined</SPAN>
+                        <SPAN LANG="en-US">at prompt (file:///W:/jeforth09/index.html:24:12)</SPAN>
+                        <SPAN LANG="en-US">at validate (file:///W:/jeforth09/jquery.terminal-0.7.6.js:2418:21)</SPAN>
+                        <SPAN LANG="en-US">at $.extend.$.omap.set_prompt (file:///W:/jeforth09/jquery.terminal-0.7.6.js:3219:25)</SPAN>
+                        <SPAN LANG="en-US">at null.set_prompt (file:///W:/jeforth09/jquery.terminal-0.7.6.js:3510:36)</SPAN>
+                        <SPAN LANG="en-US">at Word.newxt [as xt] (eval at readCodeBody (file:///W:/jeforth09/jeforth.js:439:11), &lt;anonymous&gt;:20:10)</SPAN>
+                        <SPAN LANG="en-US">at Object.KsanaVm.phaseB.object (file:///W:/jeforth09/jeforth.js:301:12)</SPAN>
+                        <SPAN LANG="en-US">at execute (file:///W:/jeforth09/jeforth.js:312:21)</SPAN>
+                        <SPAN LANG="en-US">at outerExecute (file:///W:/jeforth09/jeforth.js:359:7)</SPAN>
+                        <SPAN LANG="en-US">at outer (file:///W:/jeforth09/jeforth.js:341:5)</SPAN>
+                        <SPAN LANG="en-US">at Object.resumeForthVM [as onExit] (file:///W:/jeforth09/jeforth.js:685:4)</SPAN>
+                        <SPAN LANG="en-US">at $.extend.$.omap.pop (file:///W:/jeforth09/jquery.terminal-0.7.6.js:3442:41)</SPAN>
+                <SPAN LANG="en-US">jsc&gt; exit</SPAN>
+                <SPAN LANG="en-US">*** interpret-only :  should make dummy interpret-only ... pass </SPAN>
+                <SPAN LANG="en-US">&gt; </SPAN>
+
+<SPAN LANG="en-US">r10</SPAN>
+                        <SPAN LANG="en-US">... to the above problem,</SPAN>
+                <SPAN LANG="en-US">[x] my idea is to re-write code end-code to colon words. So in jeforth.js they</SPAN>
+                        <SPAN LANG="en-US">assume tib is never end! This must be r10. ===&gt; on going now ...</SPAN>
+                        <SPAN LANG="en-US">==&gt; r10 done but problem is still there. Root cause is not 'code', root cause</SPAN>
+                                <SPAN LANG="en-US">is &quot;term.set_prompt(prompt)&quot; statement in ';'.</SPAN>
+
+                <SPAN LANG="en-US">[x] panic to be replaced by colon word, &lt;---- no! </SPAN>
+                        <SPAN LANG="en-US">so as to wait for an user's response &lt;----- separate Warnings and Errors</SPAN>
+                        <SPAN LANG="en-US">or launch an alert(&quot;message&quot;) &lt;--- no, alert() has only [ok]</SPAN>
+                        <SPAN LANG="en-US">Reset() or not?  &lt;------------ error jump into jsc, up to the user.</SPAN>
+                        <SPAN LANG="en-US">Switch to jsc &lt;------ errors</SPAN>
+                        <SPAN LANG="en-US">close() the program &lt;------- nothing is so bad</SPAN>
+                        <SPAN LANG="en-US">switch to Chrome debugger &lt;----- can do that in jsc </SPAN>
+
+                <SPAN LANG="en-US">[x] recall why these 3 must be separated in definition of 'alias' ??</SPAN>
+                        <SPAN LANG="en-US">fortheval(&quot;BL&quot;); execute(&quot;word (create)&quot;);</SPAN>
+                        
+                <SPAN LANG="en-US">[x] term.echo() or systemtype() does not print immediately until a prompt.</SPAN>
+                        <SPAN LANG="en-US">function (){ /* test6 */</SPAN>
+                                <SPAN LANG="en-US">for(var i=0; i&lt;100; i++) { systemtype(i+'\n'); fortheval(&quot;100 sleep&quot;); }</SPAN>
+                        <SPAN LANG="en-US">}</SPAN>
+                        <SPAN LANG="en-US">so systemtype() should issue a prompt for '\n'.</SPAN>
+                        <SPAN LANG="en-US">===&gt; I am asking the author about this question.</SPAN>
+                        <SPAN LANG="en-US">===&gt; I also found  command_line.prompt(prompt); in J/T prints the &quot;prompt&quot;.</SPAN>
+                        
+                <SPAN LANG="en-US">[x] Unify the display output forth words to dot . and everything depend on it.</SPAN>
+                <SPAN LANG="en-US">[x]     Kernel should not be I/O related at all ! Use no keyboard, print messages to</SPAN>
+                        <SPAN LANG="en-US">startup.log instead.</SPAN>
+                <SPAN LANG="en-US">[ ] Separate 00_init.f 01_kernel.f 02_misc.f 03_jQueryTerminal.f etc</SPAN>
+
+<SPAN LANG="en-US">r11 </SPAN>
+                <SPAN LANG="en-US">[x] remove I/O related things out of jeforth.js and even jeforth.f. Basic I/O is in index.htm only.</SPAN>
+                <SPAN LANG="en-US">[x] I found a problem in older jeforth! 'alias' should not copy everyting by value.</SPAN>
+                        <SPAN LANG="en-US">not arrays and not objects.</SPAN>
+                        <SPAN LANG="en-US">but .creater should copy by value so as to add 'alias'</SPAN>
+                <SPAN LANG="en-US">[x] If we want &amp;&amp; and || then we better do it right.</SPAN>
+                        <SPAN LANG="en-US">&amp;&amp; ( a b == a &amp;&amp; b ) if a then b else swap endif</SPAN>
+                        <SPAN LANG="en-US">|| ( a b == a || b ) if a then swap else b endif</SPAN>
+                <SPAN LANG="en-US">[x] Hex is stragne in JavaScript, -1 &amp; 0xffffffff will be still -1. That means hex is 32 bits</SPAN>
+                        <SPAN LANG="en-US">and bit 31 is the sign bit. But not exactly, because 0xfff(over 32 bits) can be existing.</SPAN>
+                        <SPAN LANG="en-US">However, my job is just to print hex correctly by using .r and .0r. So I simply use a </SPAN>
+                        <SPAN LANG="en-US">workaround that prings higher 16 bits and then lower 16 bits separatedly then JavaScript's</SPAN>
+                        <SPAN LANG="en-US">opinion about hex won't bother anymore.</SPAN>
+                        
+                        <SPAN LANG="en-US">n = (n &gt;&gt; 16 &amp; 0xffff).toString(base) + (n &amp; 0xffff).toString(base);</SPAN>
+        
+                        <SPAN LANG="en-US">JavaScript's decimal can be very big numbers. But hex is a little strange.</SPAN>
+                        <SPAN LANG="en-US">For example, -2 &gt;&gt; 1 is -1 correct, -2 &gt;&gt; 31 is also -1 correct, but -2 &gt;&gt; 32 become -2 !!</SPAN>
+                        <SPAN LANG="en-US">It seems like a 32 bits system when bitwise. So my .s only prints the lower 32 bits hex.</SPAN>
+                        
+                <SPAN LANG="en-US">[x] Self-test done Shooooo! But it won't be executed without a trigger. So jeforth.f is </SPAN>
+                        <SPAN LANG="en-US">started by jQuery-termianl.onInit. </SPAN>
+        
+                <SPAN LANG="en-US">[x] print('\n') doesn't do anything just like &lt;js&gt;  $.terminal.active().echo(&quot;&quot;) &lt;/js&gt; either.</SPAN>
+                        <SPAN LANG="en-US">But &lt;js&gt;  $.terminal.active().echo(&quot;\n&quot;) &lt;/js&gt; and</SPAN>
+                        <SPAN LANG="en-US">But &lt;js&gt;  $.terminal.active().echo(&quot; \n&quot;) &lt;/js&gt; both prints two blank lines.</SPAN>
+                        <SPAN LANG="en-US">While print(&quot; &quot;) and print(&quot; \n&quot;) both print one blank line only.</SPAN>
+                        <SPAN LANG="en-US">===&gt; fixed. Debug using Chrome debugger; console.log(), find the repro procedure first..</SPAN>
+                             <SPAN LANG="en-US">etc have helpped a lot. Don't forget to write down the notes, this is so important.</SPAN>
+
+                <SPAN LANG="en-US">[x] Now print() already down. I don't need to modify forth words! So convenient.</SPAN>
+                        <SPAN LANG="en-US">But the screenbuffer does not have command line. </SPAN>
+        
+                <SPAN LANG="en-US">[x] As shown below, 100 long works fine, but 100 long2's last line won't be shown until an enter</SPAN>
+                        <SPAN LANG="en-US">will be pressed. Question is 'how to make printing stream a queue !!' </SPAN>
+
+                <SPAN LANG="en-US">[x] next step, work on the keyboard input, accept. that will be r12 then . . .</SPAN>
+
+<SPAN LANG="en-US">r12 </SPAN>
+                <SPAN LANG="en-US">[x] 'how to make printing stream a queue !!' </SPAN>
+                
+<SPAN LANG="en-US">r13             </SPAN>
+                <SPAN LANG="en-US">[x] working on jeforth.f here, ugly, other ~.f needs to refer to tick('&lt;selftest&gt;').enable </SPAN>
+                        <SPAN LANG="en-US">too.</SPAN>
+                <SPAN LANG="en-US">js&gt; require('nw.gui') constant nw.gui // Note-webkit GUI module</SPAN>
+                <SPAN LANG="en-US">nw.gui js&gt; pop().App.argv.length [if] </SPAN>
+                        <SPAN LANG="en-US">js: tick('&lt;selftest&gt;').buffer=&quot;&quot;;</SPAN>
+                <SPAN LANG="en-US">[else] </SPAN>
+                        <SPAN LANG="en-US">js&gt; tick('&lt;selftest&gt;').buffer tib.insert</SPAN>
+                <SPAN LANG="en-US">[then] </SPAN>
+                終於都搞定了，要讓 <SPAN LANG="en-US">display </SPAN>即時輸出，<SPAN LANG="en-US">forth VM </SPAN>必須讓出 <SPAN LANG="en-US">CPU</SPAN>。辦法還是 <SPAN LANG="en-US">forth VM </SPAN>的 <SPAN LANG="en-US">suspend-</SPAN>
+                <SPAN LANG="en-US">resume. </SPAN>做成 <SPAN LANG="en-US">forth word sleep command. </SPAN>例如： <SPAN LANG="en-US">: t for r@ . space 1 sleep next ; </SPAN>這個
+                <SPAN LANG="en-US">&quot;1 sleep&quot; </SPAN>就是讓 <SPAN LANG="en-US">forth VM </SPAN>休息 <SPAN LANG="en-US">1 mS </SPAN>以便把 <SPAN LANG="en-US">CPU </SPAN>讓出來給 <SPAN LANG="en-US">DOM </SPAN>去做 <SPAN LANG="en-US">dispaly </SPAN>輸出。
+                
+
+<SPAN LANG="en-US">r14             </SPAN>
+                <SPAN LANG="en-US">[x] TAB autocompletion !!</SPAN>
+
+<SPAN LANG="en-US">r15             </SPAN>
+                <SPAN LANG="en-US">&lt;js&gt; redefined in platform.f so now it accepts input from keyboard.</SPAN>
+
+                <SPAN LANG="en-US">Add a demo to compile eforth for DOS and that generates eforth.com. </SPAN>
+                <SPAN LANG="en-US">Usage : </SPAN>
+                        <SPAN LANG="en-US">&quot;nw jeforth.3nw include 86ef202.f bye&quot; </SPAN>
+                <SPAN LANG="en-US">, generates eforth.com at the working directery. </SPAN>
+
+</PRE>
+</BODY>
+</HTML>
