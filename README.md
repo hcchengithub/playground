@@ -6,10 +6,9 @@
  \___//____ \\___//____//_/ _\_  / /_//____//_/ /_/ /_//_//_/ /_/ \__\_\___/
            \/              /____/                              version 0.7.7
 ```
-http://terminal.jcubic.pl
+[http://terminal.jcubic.pl](http://terminal.jcubic.pl)
 ### Summary
-JQuery Terminal Emulator is a plugin for creating command line interpreters in your applications. It can automatically call JSON-RPC service when a user types
-commands or you can provide you own function in which you can parse user commands. It's ideal if you want to provide additional functionality for power users. It can also be used to debug your application. 
+JQuery Terminal Emulator is a plugin for creating command line interpreters in your applications. It can automatically call JSON-RPC service when a user types commands or you can provide you own function in which you can parse user commands. It's ideal if you want to provide additional functionality for power users. It can also be used to debug your application. 
 ### Features:
 * You can create interpreter for your JSON-RPC service with one line
   of code (just use url as first argument).
@@ -19,7 +18,6 @@ commands or you can provide you own function in which you can parse user command
 * Stack of interpreters - you can create commands that trigger additional
   interpreters (eg. you can use couple of JSON-RPC service and run them
   when user type command)
-
 * Command Tree - you can use nested objects. Each command will invoke a
   function, if the value is an object it will create new interpreter and
   use function from that object as commands. You can use as much nested
